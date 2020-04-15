@@ -14,7 +14,6 @@
 export default {
   mounted() {
     this.$http.get("ping").then(res => {
-      console.log(res);
       if (res.data.code != 0)
         this.$router.push({ name: "err", params: { why: res.data.msg } });
       else {
