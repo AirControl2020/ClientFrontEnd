@@ -13,6 +13,14 @@ if (!process.env.IS_WEB) Vue.use(require('vue-electron'))
 Vue.http = Vue.prototype.$http = axios
 Vue.config.productionTip = false
 /* eslint-disable no-new */
+store.commit('reset');
+setInterval(() => {
+  axios.get('temp').then(
+    res => {
+      store.dispatch('push', res.data.msg);
+    }
+  )
+}, 5000);
 new Vue({
   router,
   store,
