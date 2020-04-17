@@ -1,6 +1,7 @@
 const state = {
   mode: 0,
   temperture: new Array(20).fill(25),
+  preset: 25,
 }
 
 const getters = {
@@ -8,6 +9,9 @@ const getters = {
     return state.temperture;
   },
   mode(state) {
+    return state.mode;
+  },
+  preset(state) {
     return state.mode;
   }
 }
@@ -21,6 +25,9 @@ const mutations = {
   set_mode(state, mode) {
     state.mode = mode;
   },
+  set_preset(state, preset) {
+    state.preset = preset;
+  },
   reset(state) {
     state.temperture = new Array(20).fill(25);
     state.mode = 0;
@@ -33,6 +40,9 @@ const actions = {
   },
   turn(context, args) {
     context.commit('set_mode', args);
+  },
+  set(context, args) {
+    context.commit('set_preset', args);
   },
 }
 

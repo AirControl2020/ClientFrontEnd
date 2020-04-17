@@ -1,5 +1,6 @@
 <template>
   <v-container>
+    <selector ref="selector" />
     <v-card-title>
       <v-icon color="indigo" class="mr-12" size="64">mdi-hydraulic-oil-temperature</v-icon>
       <v-row align="start">
@@ -45,7 +46,9 @@
 
 <script>
 import router from "../router";
+import selector from "./selector";
 export default {
+  components: { selector },
   data: () => ({}),
   computed: {
     temp() {
@@ -62,12 +65,20 @@ export default {
           .post("mode", { mode: mode })
           .then(res => {
             if (res.data.code == 0) {
-              this.$store.dispatch("turn", mode);
+              this.$store.dispatch("set", 25);
+              if (mode != 0) {
+                this.$refs.selector.dialog = true;
+              }
             }
           })
           .catch(res => {
             alert(res);
           });
+      } else {
+        this.$store.dispatch("set", 25);
+        if (mode != 0) {
+          this.$refs.selector.dialog = true;
+        }
       }
     }
   }
