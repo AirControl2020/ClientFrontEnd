@@ -9,13 +9,24 @@
         </div>
       </v-row>
       <v-spacer />
-      <v-icon :color="['black' ,'grey', 'grey'] [mode]" class="mr-12" size="64">mdi-weather-windy</v-icon>
+      <v-icon
+        :color="['black' ,'grey', 'grey'] [mode]"
+        class="mr-12"
+        size="64"
+        @click="turn(0)"
+      >mdi-weather-windy</v-icon>
       <v-icon
         :color="['grey' ,'red lighten-2', 'grey'][mode]"
         class="mr-12"
         size="64"
+        @click="turn(1)"
       >mdi-white-balance-sunny</v-icon>
-      <v-icon :color="['grey' ,'grey', 'indigo'][mode]" class="mr-12" size="64">mdi-snowflake</v-icon>
+      <v-icon
+        :color="['grey' ,'grey', 'indigo'][mode]"
+        class="mr-12"
+        size="64"
+        @click="turn(2)"
+      >mdi-snowflake</v-icon>
     </v-card-title>
 
     <v-sheet color="transparent">
@@ -34,7 +45,6 @@
 
 <script>
 import router from "../router";
-import store from "../store";
 export default {
   data: () => ({}),
   computed: {
@@ -45,6 +55,21 @@ export default {
       return this.$store.getters.mode;
     }
   },
-  methods: {}
+  methods: {
+    turn(mode) {
+      if (this.mode != mode) {
+        this.$http
+          .post("mode", { mode: mode })
+          .then(res => {
+            if (res.data.code == 0) {
+              this.$store.dispatch("turn", mode);
+            }
+          })
+          .catch(res => {
+            alert(res);
+          });
+      }
+    }
+  }
 };
 </script>
