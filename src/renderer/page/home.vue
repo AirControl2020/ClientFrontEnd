@@ -10,6 +10,13 @@
         </div>
       </v-row>
       <v-spacer />
+      <v-row align="start">
+        <div>
+          <span class="title font-regular">Preset:{{preset}}</span>
+          <span>℃</span>
+        </div>
+      </v-row>
+      <v-spacer />
       <v-icon
         :color="['black' ,'grey', 'grey'] [mode]"
         class="mr-12"
@@ -56,6 +63,9 @@ export default {
     },
     mode() {
       return this.$store.getters.mode;
+    },
+    preset() {
+      return this.$store.getters.preset;
     }
   },
   methods: {
@@ -65,20 +75,29 @@ export default {
           .post("mode", { mode: mode })
           .then(res => {
             if (res.data.code == 0) {
-              this.$store.dispatch("set", 25);
-              if (mode != 0) {
-                this.$refs.selector.dialog = true;
-              }
+              this.$store.dispatch("turn", mode);
+              this.setTemp(mode);
             }
           })
           .catch(res => {
             alert(res);
           });
       } else {
+        this.setTemp(mode);
+      }
+    },
+    setTemp(mode) {
+      if (mode == 0) {
         this.$store.dispatch("set", 25);
-        if (mode != 0) {
-          this.$refs.selector.dialog = true;
-        }
+      } else if (mode == 1) {
+        this.$refs.selector.L = 25;
+        this.$refs.selector.R = 30;
+        this.$refs.selector.dialog = true;
+        console.log(this.$refs);
+      } else if (mode == 2) {
+        this.$refs.selector.L = 18;
+        this.$refs.selector.R = 25;
+        this.$refs.selector.dialog = true;
       }
     }
   }

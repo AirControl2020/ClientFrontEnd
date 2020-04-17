@@ -12,7 +12,7 @@ const getters = {
     return state.mode;
   },
   preset(state) {
-    return state.mode;
+    return state.preset;
   }
 }
 
@@ -31,6 +31,7 @@ const mutations = {
   reset(state) {
     state.temperture = new Array(20).fill(25);
     state.mode = 0;
+    state.preset = 25;
   }
 }
 
