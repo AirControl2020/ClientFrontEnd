@@ -1,5 +1,5 @@
 <template>
-  <v-container fill-height fluid class="loader">
+  <v-container fill-height fluid>
     <v-layout class="d-flex justify-center align-center">
       <v-row class="d-flex justify-center align-center">
         <v-progress-circular :size="70" :width="7" color="purple" indeterminate></v-progress-circular>
