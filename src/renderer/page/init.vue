@@ -13,16 +13,21 @@
 <script>
 export default {
   mounted() {
-    this.$http.get("ping").then(res => {
-      if (res.data.code != 0)
-        this.$router.push({ name: "err", params: { why: res.data.msg } });
-      else {
-        this.info="Connected"
-        setTimeout(() => {
-          this.$router.push({ name: "home" });
-        }, 2000);
-      }
-    });
+    this.$http
+      .get("ping")
+      .then(res => {
+        if (res.data.code != 0)
+          this.$router.push({ name: "err", params: { why: res.data.msg } });
+        else {
+          this.info = "Connected";
+          setTimeout(() => {
+            this.$router.push({ name: "home" });
+          }, 2000);
+        }
+      })
+      .catch(res => {
+        this.$router.push({ name: "err", params: { why: res } });
+      });
   },
   data: () => ({
     info: "Connect to Host"
