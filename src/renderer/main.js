@@ -21,6 +21,15 @@ setInterval(() => {
     }
   )
 }, 5000);
+
+
+setInterval(() => {
+  axios.get('cost').then(
+    res => {
+      store.dispatch('set_cost', res.data.msg);
+    }
+  )
+}, 5000);
 new Vue({
   router,
   store,

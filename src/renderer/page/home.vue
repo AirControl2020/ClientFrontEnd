@@ -10,13 +10,8 @@
         </div>
       </v-row>
       <v-spacer />
-      <v-row align="start">
-        <div>
-          <span class="title font-regular">Preset:{{preset}}</span>
-          <span>℃</span>
-        </div>
-      </v-row>
-      <v-spacer />
+      <v-icon color="grey" class="mr-12" size="64" @click="gao">mdi-power-settings</v-icon>
+
       <v-icon
         :color="['black' ,'grey', 'grey'] [mode]"
         class="mr-12"
@@ -37,6 +32,19 @@
       >mdi-snowflake</v-icon>
     </v-card-title>
 
+    <div>
+      <span class="title font-regular">Preset:{{preset}}</span>
+      <span>℃</span>
+    </div>
+    <v-spacer />
+    <div>
+      <span class="title font-regular">Cost:{{cost}}</span>
+      <span>￥</span>
+    </div>
+    <div>
+      <span class="title font-regular">{{["Off","On"][on]}}</span>
+    </div>
+
     <v-sheet color="transparent">
       <v-sparkline
         :smooth="16"
@@ -56,7 +64,9 @@ import router from "../router";
 import selector from "./selector";
 export default {
   components: { selector },
-  data: () => ({}),
+  data: () => ({
+    on: 0
+  }),
   computed: {
     temp() {
       return this.$store.getters.temperture;
@@ -66,6 +76,9 @@ export default {
     },
     preset() {
       return this.$store.getters.preset;
+    },
+    cost() {
+      return this.$store.getters.cost;
     }
   },
   methods: {
@@ -85,6 +98,20 @@ export default {
       } else {
         this.setTemp(mode);
       }
+    },
+    gao() {
+      this.$http
+        .post("on", {})
+        .then(res => {
+          if (res.data.code != 0) {
+            alert("failed");
+          } else {
+            this.on ^= 1;
+          }
+        })
+        .catch(res => {
+          alert(res);
+        });
     },
     setTemp(mode) {
       if (mode == 0) {

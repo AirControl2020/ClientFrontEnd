@@ -2,6 +2,7 @@ const state = {
   mode: 0,
   temperture: new Array(20).fill(25),
   preset: 25,
+  cost: 0,
 }
 
 const getters = {
@@ -13,6 +14,9 @@ const getters = {
   },
   preset(state) {
     return state.preset;
+  },
+  cost(state) {
+    return state.cost;
   }
 }
 
@@ -27,6 +31,9 @@ const mutations = {
   },
   set_preset(state, preset) {
     state.preset = preset;
+  },
+  set_cost(state, cost) {
+    state.cost = cost;
   },
   reset(state) {
     state.temperture = new Array(20).fill(25);
@@ -44,6 +51,9 @@ const actions = {
   },
   set(context, args) {
     context.commit('set_preset', args);
+  },
+  set_cost(context, args) {
+    context.commit('set_cost', args);
   },
 }
 
